@@ -1,0 +1,48 @@
+﻿Amazon Login with Browser Crash Recovery 
+Workflow Type: Flowchart
+File Name: AmazonLoginRecovery.xaml
+Flowchart Activity List (Exact Order)
+1. Start Node
+2. Use Application/Browser
+   - URL: https://www.amazon.in
+   - Browser: Chrome
+3. Retry Scope
+   - NumberOfRetries: 3
+   - RetryInterval: 00:00:02
+   Retry Scope → Action Section:
+   3.1 Click → Hello, Sign in
+   3.2 Type Into → Email textbox
+       - Text: "your_email"
+       - EmptyField: True
+   3.3 Click → Continue
+   3.4 Type Into → Password textbox
+       - Text: "your_password"
+       - EmptyField: True
+   3.5 Click → Sign-In button
+   Retry Scope → Condition Section:
+   3.6 Element Exists
+       - Indicate: Account & Lists OR Hello, username
+       - Output: loginSuccess (Boolean)
+4. Flow Decision
+   - Condition: loginSuccess = True
+   TRUE Branch:
+   5. Write Line → Login Successful
+   6. End
+   FALSE Branch:
+   7. Write Line → Login Failed / Browser crashed. Restarting...
+   8. Kill Process → chrome
+   9. Delay → 00:00:02
+   10. Use Application/Browser → https://www.amazon.in
+   11. Click → Hello, Sign in
+   12. Type Into → Email textbox
+   13. Click → Continue
+   14. Type Into → Password textbox
+   15. Click → Sign-In button
+   16. Write Line → Recovery Login Attempt Completed
+   17. End
+ 
+Variables Used:
+loginSuccess  |  Boolean  |  Default = False
+
+
+________________
